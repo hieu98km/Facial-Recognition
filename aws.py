@@ -7,6 +7,7 @@ import openpyxl
 from TTS import text2speech
 from gtts import gTTS
 import playsound
+import os
 
 def faceReco():
     # Tạo workbook để lưu file excel 
@@ -29,10 +30,7 @@ def faceReco():
     response = rekognition.detect_faces(Image={'Bytes':image_binary})
     all_faces = response['FaceDetails']
     if all_faces == []:
-        text = 'Tôi không thấy bạn'
-        output = gTTS(text, lang="vi", slow=False)
-        output.save("output_none.mp3")
-        playsound.playsound('output_none.mp3', True)
+        return
     else:
         # Tạo list khuôn mặt
         boxes = []
@@ -78,10 +76,8 @@ def faceReco():
                             wb.save('excelCreate.xlsx')
                     else:
                         person = 'no match found'
-        text2speech()
+            text2speech()
     return
-
-
 
 
 

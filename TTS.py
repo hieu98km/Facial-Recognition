@@ -2,6 +2,7 @@
 from gtts import gTTS
 import playsound
 import openpyxl as xl
+import os
 
 def text2speech():
     ListFace = ['Tổng Bí Thư','Chủ Tịch Nước','Thủ Tướng','Chủ Tịch Quốc Hội',
@@ -13,7 +14,7 @@ def text2speech():
             'Võ Quốc Thắng','Nguyễn Thị Nga','Đỗ Anh Tuấn', 'Tổng Giám Đốc',
             'Chị Ngoãn','Trung Hiếu','Quốc Anh','Văn Thành','Thanh Phong','Hiếu T2', 'Phú','Huyền','Không có ai'
             ]
-    wb = xl.load_workbook(f'/home/hieu98/Documents/Backup_21_11/excelCreate.xlsx')
+    wb = xl.load_workbook(f'/home/hieu98/Documents/Backup_22_11/excelCreate.xlsx')
     activeSheet = wb.active
     sheet = wb['Sheet']
     list_1 = list(sheet.columns)[0]
@@ -43,3 +44,4 @@ def text2speech():
         output = gTTS(text, lang="vi", slow=False)
         output.save("output.mp3")
         playsound.playsound('output.mp3', True)
+        os.system('python2 mp3Co.py')

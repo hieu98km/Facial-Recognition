@@ -10,7 +10,6 @@ from liveCamera import liveCam
 from gtts import gTTS
 import playsound
 
-
 def aws():
     t1 = time.time()
     # Tạo workbook để lưu file excel 
@@ -30,7 +29,7 @@ def aws():
     img_name = frame
     image = Image.open(img_name)
     stream = io.BytesIO()
-    image.save(stream,format="JPG")
+    image.save(stream,format="JPEG")
     image_binary = stream.getvalue()
     # Detect face by rekognition
     response = rekognition.detect_faces(Image={'Bytes':image_binary})
@@ -57,7 +56,7 @@ def aws():
             image_crop = image.crop((x1,y1,x2,y2))
             # Chuyển về ảnh nhị phân
             stream = io.BytesIO()
-            image_crop.save(stream,format="JPG")
+            image_crop.save(stream,format="JPEG")
             image_crop_binary = stream.getvalue()
             # Gửi hình ảnh được cắt riêng lẻ lên Amazon Rekognition
             response = rekognition.search_faces_by_image(

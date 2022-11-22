@@ -7,6 +7,7 @@ import cv2
 import openpyxl
 from TTS import text2speech
 
+
 if __name__ == "__main__":
     # Tạo workbook để lưu file excel 
     wb = openpyxl.Workbook()
@@ -20,9 +21,10 @@ if __name__ == "__main__":
     dynamodb = boto3.client('dynamodb', region_name='ap-southeast-1')
     t1 = time.time()
     # Khởi tạo camera
-    cam = cv2.VideoCapture(0)
     img_counter = 0
+    person = None
     while True:
+        cam = cv2.VideoCapture(0)
         numFace = 1
         t2 = time.time()
         ret, frame = cam.read()
@@ -81,7 +83,6 @@ if __name__ == "__main__":
                     CollectionId='faceRecoSing',
                     Image={'Bytes':image_crop_binary}                                       
                     )
-            t5 = time.time()
             if len(response['FaceMatches']) > 0:
                 # Return results
                 # print ('Tọa độ: ', box)
@@ -90,7 +91,6 @@ if __name__ == "__main__":
                         TableName='faceRecoSing1',               
                         Key={'RekognitionId': {'S': match['Face']['FaceId']}}
                         )
-                    
                     if 'Item' in face:
                         person = face['Item']['FullName']['S']
                         # font = ImageFont.truetype(r'/home/hieu98/Documents/FaceReco1/font-times-new-roman.ttf', 9)
@@ -105,35 +105,48 @@ if __name__ == "__main__":
                                                     thickness=1,
                                                     lineType=cv2.LINE_AA,
                                                     shift=0)
-                        # Save person-reco
-                        if person != sheet["A{}".format(numFace)]:
-                            sheet["A{}".format(numFace)] = person
-                            sheet["A{}".format(numFace)].value
-                            wb.save('excelCreate.xlsx')
-                            numFace += 1
-                        else:
-                            sheet["A{}".format(numFace)] = person
-                            sheet["A{}".format(numFace)].value
-                            wb.save('excelCreate.xlsx')
+                        # # Save person-reco
+                        # if person != sheet["A{}".format(numFace)]:
+                        #     sheet["A{}".format(numFace)] = person
+                        #     sheet["A{}".format(numFace)].value
+                        #     wb.save('excelCreate.xlsx')
+                        #     numFace += 1
+                        # else:
+                        #     sheet["A{}".format(numFace)] = person
+                        #     sheet["A{}".format(numFace)].value
+                        #     wb.save('excelCreate.xlsx')
                     else:
-                        person = 'no match found'
-        
+                        person = None
+                    if person == None:
+                            sheet["A{}".format(numFace)] = person
+                            sheet["A{}".format(numFace)].value
+                            wb.save('excelCreate.xlsx')
+                            
+                    elif person != sheet["A{}".format(numFace)]:
+                        sheet["A{}".format(numFace)] = person
+                        sheet["A{}".format(numFace)].value
+                        wb.save('excelCreate.xlsx')
+                        numFace += 1
+                    else:
+                        sheet["A{}".format(numFace)] = person
+                        sheet["A{}".format(numFace)].value
+                        wb.save('excelCreate.xlsx')
+
+                    t5 = time.time()
+                    print ("Độ tin cậy: ",match['Face']['Confidence'],"\nPerson:", person)
+                    print("Time xử lý: ", t5-t2)
         # Sử dụng file để speech
         text2speech()
-        print ("Time connect:",t2-t1)
-        print ("Time chup anh:",t3-t2)
-        print("Time search: ", t4-t3)
-        print("Time face recognition: ", t5-t4)
-        # cv2.imshow("face-recognition", image_path0)
+        cv2.imshow("face-recognition", image_path0)
         cam.release()
         k = cv2.waitKey(1)
-
         if k%256 == 27:
         # ESC pressed
             print("closing")
             break
     cam.release()
     cv2.destroyAllWindows()
+
 
 
 
