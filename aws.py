@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import boto3
 import io
 from PIL import Image
@@ -51,8 +52,8 @@ def faceReco():
             image_crop_binary = stream.getvalue()
             # Gửi hình ảnh được cắt riêng lẻ lên Amazon Rekognition
             response = rekognition.search_faces_by_image(
-                    FaceMatchThreshold=95,
-                    MaxFaces=10,
+                    FaceMatchThreshold=97,
+                    MaxFaces=5,
                     CollectionId='faceRecoSing',
                     Image={'Bytes':image_crop_binary})
             if len(response['FaceMatches']) > 0:
@@ -77,8 +78,6 @@ def faceReco():
                     else:
                         person = 'no match found'
             text2speech()
-    return
-
 
 
 

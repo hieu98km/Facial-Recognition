@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
-from TTS import text2speech
-from liveCamera import liveCam
+#export PYTHONPATH=${PYTHONPATH}:~/pynaoqi/lib/python2.7/site-packages
 from aws import faceReco
-import cv2
-import time
-import os
+from liveCamera import liveCam
 
 if __name__ == "__main__":
     while True:

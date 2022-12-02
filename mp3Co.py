@@ -555,7 +555,7 @@ def main(session):
     This example uses the getCurrentPosition method.
     """
     session = qi.Session()
-    ip_address = "10.51.5.141"
+    ip_address = "10.51.5.61"
     port = 9559
     session.connect("tcp://" + ip_address + ":" + str(port))
     ssh = paramiko.SSHClient()
@@ -564,7 +564,7 @@ def main(session):
     ssh.connect(hostname=ip_address, username="nao", password="ThanhTruc0301@")
     scp = SCPClient(ssh.get_transport())
     scp = SCPClient(ssh.get_transport())
-    scp.put("/home/hieu98/Documents/Backup_22_11/output.mp3")
+    scp.put("/home/hieu98/Documents/Backup_22_11_v2/output.mp3")
     print("[INFO]: File " + "output.mp3" + " uploaded")
     scp.close()
     # Get the service ALAudioPlayer.
@@ -577,7 +577,7 @@ def main(session):
     print ("The current position in file is: ", currentPos)
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--ip", type=str, default="10.51.5.141")
+    parser.add_argument("--ip", type=str, default="10.51.5.61")
     parser.add_argument("--port", type=int, default=9559)
     args = parser.parse_args()
     session = qi.Session()

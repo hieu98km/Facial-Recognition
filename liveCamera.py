@@ -11,7 +11,7 @@ def liveCam():
         numFace = 1
         ret, frame = cam.read()
         if not ret:
-            print("lấy ảnh lỗi")
+            print("image error")
             break
         # Lưu ảnh và convert chuẩn bị cho rekognition
         img_name = "image{}_face.png".format(img_counter)
@@ -22,5 +22,7 @@ def liveCam():
     t2 = time.time()
     print(t2-t1)
     return img_name
+    
+liveCam()
 
     

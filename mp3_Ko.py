@@ -552,7 +552,7 @@ def main(session):
     ssh.connect(hostname=ip_address, username="nao", password="ThanhTruc0301@")
     scp = SCPClient(ssh.get_transport())
     scp = SCPClient(ssh.get_transport())
-    scp.put("/home/hieu98/Documents/Backup_22_11/output_none.mp3")
+    scp.put("/home/hieu98/Documents/Backup_22_11_V2/output_none.mp3")
     print("[INFO]: File " + "output.mp3" + " uploaded")
     scp.close()
     # Get the service ALAudioPlayer.
