@@ -1,21 +1,16 @@
 # -*- coding: utf-8 -*-
-from TTS import text2speech
-from liveCamera import liveCam
-from aws import faceReco
+from text_to_speech import text2speech
+from live_camera import live_cam_laptop
+from aws_cam_laptop import face_reco
 import cv2
 import time
 
 if __name__ == "__main__":
     # while True:
-        t1 = time.time()
-        liveCam()
-        t2 = time.time()
-        faceReco()
-        t3 = time.time()
-        k = cv2.waitKey(1)
-        print(t2-t1)
-        print(t3-t2)
-        print(t3-t1)
+        live_cam_laptop()
+        face_reco()
+        text2speech()
+        # k = cv2.waitKey(1)
         # if k%256 == 27:
         # # ESC pressed
         #     print("closing")
